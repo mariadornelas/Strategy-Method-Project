@@ -7,7 +7,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** O contexto: delega à estratégia, guarda histórico e aceita troca em tempo de execução. */
 class MonitorSensorTest {
 
     @Test
@@ -22,7 +21,7 @@ class MonitorSensorTest {
         Nivel nivel = monitor.registrar(70.0);
         monitor.registrar(75.0);
 
-        assertEquals(Nivel.ALERTA, nivel);   // o contexto devolve exatamente o que a estratégia decidiu
+        assertEquals(Nivel.ALERTA, nivel);
         assertEquals(List.of(List.of(70.0), List.of(70.0, 75.0)), recebidos);
     }
 
@@ -55,8 +54,8 @@ class MonitorSensorTest {
         monitor.trocarEstrategia(new TaxaVariacao(10, 20));
 
         monitor.registrar(70.0);
-        assertEquals(Nivel.CRITICO, monitor.registrar(95.0));   // salto de 25, e o valor 95 sozinho seria só CRITICO por limite
-        assertEquals(Nivel.NORMAL, monitor.registrar(96.0));    // estável, mesmo alto: só a taxa importa agora
+        assertEquals(Nivel.CRITICO, monitor.registrar(95.0));
+        assertEquals(Nivel.NORMAL, monitor.registrar(96.0));
     }
 
     @Test
